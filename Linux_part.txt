@@ -4,25 +4,28 @@
 Переименовать файл, дав ему новое имя (Друзья человека)
 
 Создаю и заполняю файл с домашними животными
-root@ubuntu-ser:~$ cat > Pets
+root@ubuntu-yul:~$ cat > Pets
 dogs
 cats
 hamsters
-root@ubuntu-ser:~$ cat Pets
+root@ubuntu-yul:~$ cat Pets
 dogs
 cats
 hamsters
 
 Создаю и заполняю файл с вьючными животными
-root@ubuntu-ser:~$ cat > PackAnimals horses
+root@ubuntu-yul:~$ cat > PackAnimals
+horses
 camels
 donkeys
-root@ubuntu-ser:~$ cat PackAnimals horses
+root@ubuntu-yul:~$ cat PackAnimals
+horses
 camels
 donkeys
 
 Объединяю файлы
-root@ubuntu-ser:~$ cat PackAnimals >> Pets root@ubuntu-ser:~$ cat Pets
+root@ubuntu-yul:~$ cat PackAnimals >> Pets
+root@ubuntu-yul:~$ cat Pets
 dogs
 cats
 hamsters
@@ -31,7 +34,9 @@ camels
 donkeys
 
 Переименовываю файл
-root@ubuntu-ser:~$ mv Pets HumansFriends root@ubuntu-ser:~$ cat HumansFriends dogs
+root@ubuntu-yul:~$ mv Pets HumansFriends
+root@ubuntu-yul:~$ cat HumansFriends
+dogs
 cats
 hamsters
 horses
@@ -39,8 +44,10 @@ camels
 donkeys
     
 2. Создать директорию, переместить файл туда
-root@ubuntu-ser:~$ mkdir newdir root@ubuntu-ser:~$ mv HumansFriends newdir/ root@ubuntu-ser:~$ cat HumansFriends
-cat: HumansFriends: No such file or directory root@ubuntu-ser:~$ cat newdir/HumansFriends dogs
+root@ubuntu-yul:~$ mkdir newdir
+root@ubuntu-yul:~$ mv HumansFriends newdir/
+root@ubuntu-yul:~$ cat newdir/HumansFriends
+dogs
 cats
 hamsters
 horses
@@ -49,14 +56,14 @@ donkeys
 
 3. Подключить дополнительный репозиторий MySQL. Установить любой пакет из этого репозитория.
 Скачиваю последнюю версию файла конфигурации репозитория
-root@ubuntu-ser:~$ wget https://repo.mysql.com//mysql-apt-config_0.8.24-1_all.deb --2023-04-17 21:31:05-- https://repo.mysql.com//mysql-apt-config_0.8.24-1_all.deb Resolving repo.mysql.com (repo.mysql.com)... 2.17.156.231
+root@ubuntu-yul:~$ wget https://repo.mysql.com//mysql-apt-config_0.8.24-1_all.deb --2023-04-17 21:31:05-- https://repo.mysql.com//mysql-apt-config_0.8.24-1_all.deb Resolving repo.mysql.com (repo.mysql.com)... 2.17.156.231
 Connecting to repo.mysql.com (repo.mysql.com)|2.17.156.231|:443... connected. HTTP request sent, awaiting response... 200 OK
 Length: 18048 (18K) [application/x-debian-package] Saving to: ‘mysql-apt-config_0.8.24-1_all.deb’
 mysql-apt-config_0.8.24-1_all 100%[=================================================>] 17.62K --.-KB/s in 0.001s
 2023-04-17 21:31:05 (20.3 MB/s) - ‘mysql-apt-config_0.8.24-1_all.deb’ saved [18048/18048]
 
 Добавляю репозиторий
-root@ubuntu-ser:~$ sudo dpkg -i mysql-apt-config_0.8.24-1_all.deb Selecting previously unselected package mysql-apt-config.
+root@ubuntu-yul:~$ sudo dpkg -i mysql-apt-config_0.8.24-1_all.deb Selecting previously unselected package mysql-apt-config.
 (Reading database ... 110679 files and directories currently installed.) Preparing to unpack mysql-apt-config_0.8.24-1_all.deb ...
 Unpacking mysql-apt-config (0.8.24-1) ...
 Setting up mysql-apt-config (0.8.24-1) ...
@@ -65,7 +72,7 @@ Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (s
 OK
 
 Обновляю базу пакетов
-root@ubuntu-ser:~$ sudo apt update
+root@ubuntu-yul:~$ sudo apt update
 Hit:1 http://by.archive.ubuntu.com/ubuntu jammy InRelease
 Hit:2 http://by.archive.ubuntu.com/ubuntu jammy-updates InRelease Hit:3 http://by.archive.ubuntu.com/ubuntu jammy-backports InRelease
    
@@ -81,7 +88,7 @@ Reading state information... Done
 W: http://repo.mysql.com/apt/ubuntu/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
 
 Устанавливаю MySQL
-root@ubuntu-ser:~$ sudo apt install -y mysql-server Reading package lists... Done
+root@ubuntu-yul:~$ sudo apt install -y mysql-server Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
 The following additional packages will be installed:
@@ -95,7 +102,7 @@ After this operation, 273 MB of additional disk space will be used.
 .....
 
 Проверяю статус сервиса
-root@ubuntu-ser:~$ systemctl status mysql ● mysql.service - MySQL Community Server
+root@ubuntu-yul:~$ systemctl status mysql ● mysql.service - MySQL Community Server
 Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)
 Active: active (running) since Mon 2023-04-17 21:40:33 UTC; 29min ago Docs: man:mysqld(8)
 http://dev.mysql.com/doc/refman/en/using-systemd.html Main PID: 3377 (mysqld)
@@ -108,7 +115,7 @@ http://dev.mysql.com/doc/refman/en/using-systemd.html Main PID: 3377 (mysqld)
 Apr 17 21:40:32 server1 systemd[1]: Starting MySQL Community Server... Apr 17 21:40:33 server1 systemd[1]: Started MySQL Community Server.
    
 Проверяю подключение из локального клиента
- root@ubuntu-ser:~$ sudo mysql -p
+root@ubuntu-yul:~$ sudo mysql -p
 Enter password:
 Welcome to the MySQL monitor. Commands end with ; or \g. Your MySQL connection id is 9
 Server version: 8.0.32 MySQL Community Server - GPL
@@ -119,7 +126,7 @@ mysql> exit
 Bye
 
 4. Установить и удалить deb-пакет с помощью dpkg.
-root@ubuntu-ser:~$ wget https://go.skype.com/skypeforlinux-64.deb --2023-04-17 21:53:54-- https://go.skype.com/skypeforlinux-64.deb Resolving go.skype.com (go.skype.com)... 40.118.109.53
+root@ubuntu-yul:~$ wget https://go.skype.com/skypeforlinux-64.deb --2023-04-17 21:53:54-- https://go.skype.com/skypeforlinux-64.deb Resolving go.skype.com (go.skype.com)... 40.118.109.53
 Connecting to go.skype.com (go.skype.com)|40.118.109.53|:443... connected. HTTP request sent, awaiting response... 301 Moved Permanently
 Location: https://get.skype.com/getskype-webwrap-deb [following] --2023-04-17 21:53:55-- https://get.skype.com/getskype-webwrap-deb Resolving get.skype.com (get.skype.com)... 52.174.193.75
 Connecting to get.skype.com (get.skype.com)|52.174.193.75|:443... connected. HTTP request sent, awaiting response... 302 Found
@@ -131,22 +138,22 @@ skypeforlinux-64.deb 100%[======================================================
 2023-04-17 21:54:04 (12.7 MB/s) - ‘skypeforlinux-64.deb’ saved [126373092/126373092]
 
 Устанавливаю Skype
-root@ubuntu-ser:~$ sudo dpkg -i skypeforlinux-64.deb
+root@ubuntu-yul:~$ sudo dpkg -i skypeforlinux-64.deb
 (Reading database ... 126536 files and directories currently installed.) Preparing to unpack skypeforlinux-64.deb ...
 Unpacking skypeforlinux (8.94.0.422) over (8.94.0.422) ...
 Setting up skypeforlinux (8.94.0.422) ...
 Processing triggers for hicolor-icon-theme (0.17-2) ...
  
 Доустанавливаю необходимые пакеты
- root@ubuntu-ser:~$ sudo apt -f install Reading package lists... Done Building dependency tree... Done Reading state information... Done
+ root@ubuntu-yul:~$ sudo apt -f install Reading package lists... Done Building dependency tree... Done Reading state information... Done
 0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
 
 Проверяю
-root@ubuntu-ser:~$ apt list | grep skype
+root@ubuntu-yul:~$ apt list | grep skype
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts. skypeforlinux/now 8.94.0.422 amd64 [installed,local]
 
 Удаляю Skype
-root@ubuntu-ser:~$ sudo dpkg -r skypeforlinux
+root@ubuntu-yul:~$ sudo dpkg -r skypeforlinux
 (Reading database ... 126536 files and directories currently installed.) Removing skypeforlinux (8.94.0.422) ...
 dpkg: warning: while removing skypeforlinux, directory '/opt' not empty so not removed
 Processing triggers for hicolor-icon-theme (0.17-2) ...
